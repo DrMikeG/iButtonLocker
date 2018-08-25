@@ -10,13 +10,20 @@ String keyStatus="";
 // red is ground
 // Pin 10 is D10
 // 4.7K pull-up resistor pulling pin 10 to 5V+
+// LED is connected. White lead is ground, Black lead is power.
+// I'm using a 10k and a 100r resistor in parallel to make a 1k
+
+int ledPin = 17; // A3
 
 void setup(void) {
   Serial.begin(115200);
+  pinMode(17, OUTPUT);
+  digitalWrite(ledPin, LOW);
 }
 
 
 void loop(void) {
+  digitalWrite(ledPin, LOW);
   getKeyCode();
   if(keyStatus=="ok"){
       byte i;
@@ -51,7 +58,7 @@ void getKeyCode(){
   }else{
       Serial.println("Device!");
   }    
-
+  digitalWrite(ledPin, HIGH);
 
   if ( OneWire::crc8( addr, 7) != addr[7]) {
       keyStatus="CRC invalid";
