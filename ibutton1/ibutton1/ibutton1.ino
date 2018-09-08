@@ -14,16 +14,20 @@ String keyStatus="";
 // I'm using a 10k and a 100r resistor in parallel to make a 1k
 
 int ledPin = 17; // A3
+int transistorPin = 6;// D6
 
 void setup(void) {
   Serial.begin(115200);
-  pinMode(17, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(transistorPin, OUTPUT);
   digitalWrite(ledPin, LOW);
+  digitalWrite(transistorPin, LOW);
 }
 
 
 void loop(void) {
   digitalWrite(ledPin, LOW);
+  digitalWrite(transistorPin, LOW);
   getKeyCode();
   if(keyStatus=="ok"){
       byte i;
@@ -59,7 +63,8 @@ void getKeyCode(){
       Serial.println("Device!");
   }    
   digitalWrite(ledPin, HIGH);
-
+  digitalWrite(transistorPin, HIGH);
+  delay(1000);
   if ( OneWire::crc8( addr, 7) != addr[7]) {
       keyStatus="CRC invalid";
       return;
